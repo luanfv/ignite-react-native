@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
     SafeAreaView, 
     Text, 
@@ -14,6 +14,7 @@ import { SkillCard } from '../components/SkillCard';
 export function Home() {
     const [newSkill, setNewSkill] = useState('');
     const [mySkills, setMySkills] = useState([]);
+    const [gretting, setGretting] = useState('');
 
     function handleAddNewSkill() {
         if (!!newSkill) {
@@ -22,9 +23,21 @@ export function Home() {
         }
     }
 
+    useEffect(() => {
+        const currentHour = new Date().getHours();
+
+        if (currentHour < 12) {
+            setGretting('Good morning');
+        } else if (currentHour >= 12 && currentHour < 18) {
+            setGretting('Good afternoon');
+        } else {
+            setGretting('Good night');
+        }
+    }, []);
+
     return (
         <SafeAreaView style={styles.container}>
-            <Text style={styles.title}>Welcome</Text>
+            <Text style={styles.title}>{gretting}</Text>
 
             <TextInput 
                 style={styles.input} 
